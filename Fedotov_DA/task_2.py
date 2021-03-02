@@ -1,35 +1,17 @@
-cubes_odd_numbers_list = []
-first_result = 0
-second_result = 0
+pattern = ['в', '5', 'часов', '17', 'минут', 'температура', 'воздуха', 'была', '+5', 'градусов']
+new_list = []
 
-for number in range(0, 1000):
-    if number % 2 != 0:
-        number **= 3
-        cubes_odd_numbers_list.append(number)
+for el in pattern:
+    if el.isdigit():
+        number = int(el)
+        new_list.extend(['"', f'{number:02d}', '"'])
+    elif el.startswith('+') and el[1:].isdigit():
+        number = int(el[1:])
+        new_list.extend(['"', f'+{number:02d}', '"'])
+    else:
+        new_list.append(el)
 
-for number in cubes_odd_numbers_list:
-    sum_digits = 0
-    i = number
-    while i > 0:
-        digit = i % 10
-        sum_digits += digit
-        i //= 10
+print(new_list)
 
-    if sum_digits % 7 == 0:
-        first_result += number
-
-print("Сумма чисел, до прибавления 17: {}".format(first_result))
-
-for number in cubes_odd_numbers_list:
-    sum_digits = 0
-    number += 17
-    i = number
-    while i > 0:
-        digit = i % 10
-        sum_digits += digit
-        i //= 10
-
-    if sum_digits % 7 == 0:
-        second_result += number
-
-print("Сумма чисел , после прибавления 17: {}".format(second_result))
+result_string = " ".join(new_list)
+print(result_string)
