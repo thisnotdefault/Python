@@ -1,20 +1,43 @@
-prices = [57.80, 46.51, 97, 56.14, 32.47, 12.51, 80.33, 12, 19.23, 2.5, 13.07, 5]
-result = []
+from random import choice
 
-for price in prices:
-    price = int(round(price * 100))
-    rub = price // 100
-    penny = price % 100
-    result.append(f"{rub:2d} руб {penny:02d} коп ")
 
-result_string = ", ".join(result)
+def get_jokes(amount=3, repeat_words=True):
+    """
+    This function generate some jokes
 
-print(f"Список цен в одну строку: {result_string}")
-print(f"Id списка до сортировки по возрастанию {id(result)}")
-result.sort()
-print(f"Сортированный список: {result}")
-print(f"Id списка после сортировки по возрастанию {id(result)}")
-result_sorted = sorted(result)
-result_sorted.sort(reverse=True)
-print(f"Новый список после сортировки по убыванию(id:{id(result_sorted)}): {result_sorted}")
-print(f"Цены пяти самых дорогих товаров: {result_sorted[:5]}")
+    :param amount: the amount jokes which you want to get
+    :param repeat_words: repeat words True/False
+    :return: return jokes list
+    """
+    jokes_list = []
+    if repeat_words:
+        for joke in range(amount):
+            joke = f"{choice(nouns)} {choice(adverbs)} {choice(adjectives)}"
+            jokes_list.append(joke)
+        return jokes_list
+
+    else:
+        _temp_nouns = nouns.copy()
+        _temp_adverbs = adverbs.copy()
+        _temp_adjectives = adjectives.copy()
+        for _ in range(amount):
+            _check_length = list(map(lambda *args: len(args), _temp_nouns, _temp_adverbs, _temp_adjectives))
+            if len(_check_length) == 0:
+                break
+
+            joke = f"{choice(_temp_nouns)} {choice(_temp_adverbs)} {choice(_temp_adjectives)}"
+            noun, adverb, adjective = joke.split()
+            _temp_nouns.remove(noun)
+            _temp_adverbs.remove(adverb)
+            _temp_adjectives.remove(adjective)
+            jokes_list.append(f"{noun} {adverb} {adjective}")
+
+        return jokes_list
+
+
+nouns = ["автомобиль", "лес", "огонь", "город", "дом"]
+adverbs = ["сегодня", "вчера", "завтра", "позавчера", "ночью"]
+adjectives = ["веселый", "яркий", "зеленый", "утопичный", "мягкий"]
+
+print(get_jokes())
+print(get_jokes(6, repeat_words=False))

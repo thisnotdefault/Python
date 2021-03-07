@@ -1,17 +1,22 @@
-pattern = ['в', '5', 'часов', '17', 'минут', 'температура', 'воздуха', 'была', '+5', 'градусов']
-new_list = []
+def num_translate_adv(word):
+    if word.istitle():
+        return NUM_TRANSLATE_DICT.get(word.lower()).title()
+    return NUM_TRANSLATE_DICT.get(word)
 
-for el in pattern:
-    if el.isdigit():
-        number = int(el)
-        new_list.extend(['"', f'{number:02d}', '"'])
-    elif el.startswith('+') and el[1:].isdigit():
-        number = int(el[1:])
-        new_list.extend(['"', f'+{number:02d}', '"'])
-    else:
-        new_list.append(el)
 
-print(new_list)
+NUM_TRANSLATE_DICT = {
+    "zero": "ноль",
+    "one": "один",
+    "two": "два",
+    "three": "три",
+    "four": "четыре",
+    "five": "пять",
+    "six": "шесть",
+    "seven": "семь",
+    "eight": "восемь",
+    "nine": "девять",
+    "ten": "десять",
+}
 
-result_string = " ".join(new_list)
-print(result_string)
+print(num_translate_adv('One'))
+print(num_translate_adv('two'))
